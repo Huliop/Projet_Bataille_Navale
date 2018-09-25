@@ -14,30 +14,36 @@ public abstract class Pion {
 		this.life = 2;
 		
 		switch(nom) {
-		case "Contre Torpilleur":
-			this.size = 3;
-			this.champDeTir = 2;
-			this.nom = "Contre torpilleur";
-		case "Croiseur":
-			this.size = 4;
-			this.champDeTir = 2;
-			this.nom = "Croiseur";
-		case "Porte-Avion":
-			this.size = 5;
-			this.champDeTir = 2;
-			this.nom = "Porte-avion";	
-		case "Sous-marin":
-			this.size = 3;
-			this.champDeTir = 4;
-			this.nom = "Sous-marin";
-		case "Torpilleur":
-			this.size = 2;
-			this.champDeTir = 5;
-			this.nom = "Torpilleur";
-		default:
-			this.size = 2;
-			this.champDeTir = 2;
-			this.nom = "Default";
+			case "Contre Torpilleur":
+				this.size = 3;
+				this.champDeTir = 2;
+				this.nom = "Contre torpilleur";
+				break;
+			case "Croiseur":
+				this.size = 4;
+				this.champDeTir = 2;
+				this.nom = "Croiseur";
+				break;
+				case "Porte-Avion":
+				this.size = 5;
+				this.champDeTir = 2;
+				this.nom = "Porte-avion";	
+				break;
+			case "Sous-marin":
+				this.size = 3;
+				this.champDeTir = 4;
+				this.nom = "Sous-marin";
+				break;
+			case "Torpilleur":
+				this.size = 2;
+				this.champDeTir = 5;
+				this.nom = "Torpilleur";
+				break;
+			default:
+				this.size = 2;
+				this.champDeTir = 2;
+				this.nom = "Default";
+				break;
 		}
 		
 		this.initPos(this.nom);
