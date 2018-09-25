@@ -8,7 +8,6 @@ public final class PlayerFactory {
     System.out.print("Enter your name: ");
     Scanner scanner = new Scanner(System.in);
     String input = scanner.nextLine();
-    scanner.close();
 
     return new Player.Builder(input).build();
   }
