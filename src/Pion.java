@@ -52,6 +52,7 @@ public abstract class Pion {
 	}
 	
 	protected void initPos(String nom) {
+		// TODO: Thomas
 		// TODO A modifier pour que ça soit le joueur qui choisisse où mettre ses pions
 	}
 	
