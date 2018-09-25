@@ -1,11 +1,13 @@
-public abstract class PionChampFrontal extends Pion {
+public class PionChampFrontal extends Pion {
+
+	public PionChampFrontal(String nom) {
+		super(nom);
+	}
 
 	@Override
-	protected abstract void initPos();
-
-	@Override
-	protected void setPosChampDeTir(int champ) {
+	protected void setPosChampDeTir() {
 		Position pos = new Position(0,0);
+		int val = 0;
 		Position t1 = this.pos.get(0);
 		Position t2 = this.pos.get(1);
 		int x1 = t1.getPosX();
@@ -15,19 +17,21 @@ public abstract class PionChampFrontal extends Pion {
 		
 		// S'ils sont sur la même ligne
 		if (x1 - x2  == 0) {
-			// Alors c'est vers la droite
-			if (((y1 - y2)%10 +10)%10 == 1) {
+			// Alors c'est vers la droite	
+			if (this.valPosModulo(y1 - y2, 10) == 1) {
 				// On ajoute au champ de tir les (champ) cases de devant vers la droite
-				for (int i = 1; i < champ + 1; i++) {
-					pos = new Position(x1, ((y1+i)%10 + 10)%10);
+				for (int i = 1; i < this.champDeTir + 1; i++) {
+					val = this.valPosModulo(y1+i, 10);
+					pos = new Position(x1, val);
 					posChampDeTir.add(pos);
 				}
 			}
 			// Sinon c'est vers la gauche
 			else {
 				// On ajoute au champ de tir les (champ) cases de devant vers la gauche
-				for (int i = 1; i < champ + 1; i++) {
-					pos = new Position(x1, ((y1-i)%10 + 10)%10);
+				for (int i = 1; i < this.champDeTir + 1; i++) {
+					val = this.valPosModulo(y1-i, 10);
+					pos = new Position(x1, val);
 					posChampDeTir.add(pos);
 				}
 			}			
@@ -35,18 +39,20 @@ public abstract class PionChampFrontal extends Pion {
 		// S'ils sont sur la même colonne
 		else {
 			// Alors c'est vers le bas
-			if (((x1 - x2)%10 +10)%10 == 1) {
+			if (this.valPosModulo(x1 - x2, 10) == 1) {
 				// On ajoute au champ de tir les (champ) cases de devant vers le bas
-				for (int i = 1; i < champ + 1; i++) {
-					pos = new Position(((x1+i)%10 + 10)%10, y1);
+				for (int i = 1; i < this.champDeTir + 1; i++) {
+					val = this.valPosModulo(x1+i, 10);
+					pos = new Position(val, y1);
 					posChampDeTir.add(pos);
 				}
 			}
 			// Sinon c'est vers le haut
 			else {
 				// On ajoute au champ de tir les (champ) cases de devant vers le haut
-				for (int i = 1; i < champ + 1; i++) {
-					pos = new Position(((x1-i)%10 + 10)%10, y1);
+				for (int i = 1; i < this.champDeTir + 1; i++) {
+					val = this.valPosModulo(x1-i, 10);
+					pos = new Position(val, y1);
 					posChampDeTir.add(pos);
 				}
 			}		

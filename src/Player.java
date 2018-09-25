@@ -7,22 +7,22 @@ public class Player {
 	private boolean estTouche;
 	private String adversTouche;
 	private Grille grille;
-	private Croiseur croiseur;
-	private PorteAvion pav;
-	private Torpilleur torp;
-	private SousMarin sub;
-	private ContreTorpilleur ctrtorp;
+	private PionChampFrontal croiseur;
+	private PionChampLateral pav;
+	private PionChampFrontal torp;
+	private PionChampFrontal sub;
+	private PionChampLateral ctrtorp;
 	private List<Pion> listPion;
 	
 	public Player() {
 		this.estTouche = false;
 		this.adversTouche = ""; // TODO faire en sorte que quand on touche quelqu'un son nom soit dans cette variable
 		this.grille = new Grille();
-		this.croiseur = new Croiseur();
-		this.pav = new PorteAvion();
-		this.torp = new Torpilleur();
-		this.sub = new SousMarin();
-		this.ctrtorp = new ContreTorpilleur();
+		this.croiseur = new PionChampFrontal("Croiseur");
+		this.pav = new PionChampLateral("Porte-avion");
+		this.torp = new PionChampFrontal("Torpilleur");
+		this.sub = new PionChampFrontal("Sous-marin");
+		this.ctrtorp = new PionChampLateral("Contre torpilleur");
 		iniListPion();
 	}
 
@@ -44,8 +44,8 @@ public class Player {
 		// if (tire(pos, adversaire.listPion)) {
 			// adversaire.estTouche = true;
 			// System.out.println("Vous avez touché : " + adversTouche);
-		// }
-		
+			// TODO Si le joueur a gagné, arrêter le jeu	
+		// }	
 	}
 	
 	public void setTerrainPion() {
