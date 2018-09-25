@@ -4,6 +4,7 @@ import java.util.List;
 public class Player {
 	
 	// TODO ajouter la dimension stratégique de pouvoir voir où on a tiré et ce qui a marché?
+	private String name;
 	private boolean estTouche;
 	private String adversTouche;
 	private Grille grille;
@@ -14,7 +15,9 @@ public class Player {
 	private PionChampLateral ctrtorp;
 	private List<Pion> listPion;
 	
-	public Player() {
+	private Player(Builder b) {
+		name = b.name;
+
 		this.estTouche = false;
 		this.adversTouche = ""; // TODO faire en sorte que quand on touche quelqu'un son nom soit dans cette variable
 		this.grille = new Grille();
@@ -24,6 +27,18 @@ public class Player {
 		this.sub = new PionChampFrontal("Sous-marin");
 		this.ctrtorp = new PionChampLateral("Contre torpilleur");
 		iniListPion();
+	}
+
+	public static class Builder {
+		private String name;
+
+		public Builder(String name) {
+			this.name = name;
+		}
+
+		public Player build() {
+			return new Player(this);
+		}
 	}
 
 	private void iniListPion() {
