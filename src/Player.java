@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player {
 	
@@ -41,6 +42,10 @@ public class Player {
 		}
 	}
 
+	public String getNom() {
+		return this.name;
+	}
+
 	private void iniListPion() {
 		this.listPion = new ArrayList<Pion>();
 		this.listPion.add(this.croiseur);
@@ -62,14 +67,47 @@ public class Player {
 			// TODO Si le joueur a gagné, arrêter le jeu	
 		// }	
 	}
-	
-	public void setTerrainPion() {
-		for (Pion p : listPion) {
-			List<Position> listPos = p.getPos();
-			for (Position pos : listPos) {
-				this.grille.setTerrain(1, pos);
+
+	public void placerPions() {
+		System.out.println("");
+		System.out.println(this.getNom()+", veuillez placer vos bateaux.");
+
+		for(Pion p: listPion) {
+			Boolean bateauError = true;
+
+			System.out.println(this.grille);
+			
+			while(bateauError) { 
+				System.out.print("Entrez la ligne du "+p.getNom()+" : ");
+				Integer x = UserInput.IntegerInput();
+
+				System.out.print("Entrez la colonne du "+p.getNom()+" : ");
+				Integer y = UserInput.IntegerInput();
+
+				System.out.print("Entrez l'orientation du "+p.getNom()+" (h pour horizontal, v pour vertical) : ");
+				ArrayList<String> authorized = new ArrayList<String>();
+				authorized.add("h");
+				authorized.add("v");
+				String orientation = UserInput.VerifiedInput(authorized);
+				
+				if(orientation.contains("h")) {
+					p.placerPionHorizontal(x, y, this.grille.getSize());
+				}
+				else {
+					p.placerPionVertical(x, y, this.grille.getSize());
+				}
+
+				if(this.grille.addBoat(p)) {
+					bateauError = false;
+				}
+				else {
+					System.out.println("Impossible de placer le bateau ici, veuillez recommencer.");
+				}
 			}
 		}
+
+		System.out.println("Super, voici la position de vos bateaux :");
+		System.out.println(this.grille);
 	}
 	
 	public boolean touche(List<Pion> list, Position pos) {

@@ -46,14 +46,48 @@ public abstract class Pion {
 				break;
 		}
 		
-		this.initPos(this.nom);
+		this.pos = new ArrayList<Position>();
 		this.posChampDeTir = new ArrayList<Position>();
-		this.setPosChampDeTir();
 	}
 	
-	protected void initPos(String nom) {
-		// TODO: Thomas
-		// TODO A modifier pour que ça soit le joueur qui choisisse où mettre ses pions
+	public void placerPionVertical(int x, int y, int grilleSize) {
+		this.pos = new ArrayList<Position>();
+
+		Position pInit = new Position(
+			this.valPosModulo(x, grilleSize),
+			this.valPosModulo(y, grilleSize)
+		);
+		this.pos.add(pInit);
+
+		for(int i = 1; i < this.size; i++) {
+			Position p = new Position(
+				this.valPosModulo(x + i, grilleSize),
+				this.valPosModulo(y, grilleSize)
+			);
+			this.pos.add(p);
+		}
+
+		setPosChampDeTir();
+	}
+
+	public void placerPionHorizontal(int x, int y, int grilleSize) {
+		this.pos = new ArrayList<Position>();
+
+		Position pInit = new Position(
+			this.valPosModulo(x, grilleSize),
+			this.valPosModulo(y, grilleSize)
+		);
+		this.pos.add(pInit);
+
+		for(int i = 1; i < this.size; i++) {
+			Position p = new Position(
+				this.valPosModulo(x, grilleSize),
+				this.valPosModulo(y + i, grilleSize)
+			);
+			this.pos.add(p);
+		}
+
+		setPosChampDeTir();
 	}
 	
 	protected abstract void setPosChampDeTir();
@@ -92,5 +126,15 @@ public abstract class Pion {
 	
 	public List<Position> getPosChampDeTir() {
 		return this.posChampDeTir;
+	}
+
+	public String toString() {
+		String ret = "Positions de "+this.getNom()+" : ";
+
+		for(Position p: this.pos) {
+			ret += "("+p.getPosX()+", "+p.getPosY()+") ";
+		}
+
+		return ret;
 	}
 }

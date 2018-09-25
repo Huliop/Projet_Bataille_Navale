@@ -1,4 +1,9 @@
+import java.util.List;
+
 public class Grille {
+
+	private Integer WATER = 0;
+	private Integer BOAT = 1;
 
 	private static final int size = 10;
 	private int[][] terrain;
@@ -11,7 +16,7 @@ public class Grille {
 		this.terrain = new int[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				this.terrain[i][j] = 0;
+				this.setWater(i, j);
 			}
 		}
 	}
@@ -24,21 +29,71 @@ public class Grille {
 	public int[][] getTerrain() {
 		return terrain;
 	}
-	
-	public void setTerrain(int val, Position p) {
-		int x = p.getPosX();
-		int y = p.getPosY();
-		this.terrain[x][y] = val;
+
+	public Boolean isWater(int x, int y) {
+		return(this.terrain[x][y] == WATER);
+	}
+
+	public Boolean isBoat(int x, int y) {
+		return(this.terrain[x][y] == BOAT);
+	}
+
+	private void setWater(int x, int y) {
+		this.terrain[x][y] = WATER;
+	}
+
+	private void setBoat(int x, int y) {
+		this.terrain[x][y] = BOAT;
 	}
 	
-	public void display() {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				int val = this.terrain[i][j];
-				System.out.print(val + "  ");
+	public Boolean addBoat(Pion p) {
+		List<Position> positions = p.getPos();
+
+		// On vérifie qu'il n'y a pas déjà un bateau
+		for(Position position: positions) {
+			if(this.isBoat(position.getPosX(), position.getPosY())) {
+				return false;
 			}
-			System.out.println("");
 		}
+
+		// Puis on ajoute le bateau
+		for(Position position: positions) {
+			this.setBoat(position.getPosX(), position.getPosY());
+		}
+
+		return true;
+	}
+	
+	public String toString() {
+		String ret = (this.size < 11) ? " " : "  ";
+
+		for(int i = 0; i < size; i++) {
+			ret += (i < 10) ? " "+i : i;
+		}
+
+		ret += "\n";
+
+		for (int i = 0; i < size; i++) {
+			ret += i;
+
+			for (int j = 0; j < size; j++) {
+				ret += " ";
+
+				if(isWater(i, j)) {
+					ret += "~";
+				}
+				else if(isBoat(i, j)) {
+					ret += "B";
+				}
+				else {
+					ret += " ";
+				}
+			}
+
+			ret += (i != size - 1) ? "\n" : "";
+		}
+
+		return ret;
 	}
 	
 }

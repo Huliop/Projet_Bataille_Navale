@@ -14,4 +14,8 @@ public class Position {
 	public int getPosY() {
 		return this.posY;
 	}
+
+	public String toString() {
+		return "("+this.posX+", "+this.posY+")";
+	}
 }
