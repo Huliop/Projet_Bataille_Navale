@@ -14,7 +14,7 @@ public abstract class Pion {
 		this.life = 2;
 		
 		switch(nom) {
-			case "Contre Torpilleur":
+			case "Contre torpilleur":
 				this.size = 3;
 				this.champDeTir = 2;
 				this.nom = "Contre torpilleur";
@@ -24,7 +24,7 @@ public abstract class Pion {
 				this.champDeTir = 2;
 				this.nom = "Croiseur";
 				break;
-				case "Porte-Avion":
+				case "Porte-avion":
 				this.size = 5;
 				this.champDeTir = 2;
 				this.nom = "Porte-avion";	
