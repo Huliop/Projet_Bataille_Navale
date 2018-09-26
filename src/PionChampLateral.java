@@ -6,7 +6,7 @@ public class PionChampLateral extends Pion {
 
 	// On met à jour les positions sur lesquelles peut tirer notre pion
 	@Override
-	protected void setPosChampDeTir() {
+	protected void setPosChampDeTir(int grilleSize) {
 		Position t1 = this.pos.get(0);
 		Position t2 = this.pos.get(1);
 		
@@ -17,10 +17,10 @@ public class PionChampLateral extends Pion {
 				Position pos = this.pos.get(i);
 				int x = pos.getPosX();
 				int y = pos.getPosY();
-				Position pos1 = new Position(this.valPosModulo(x+1, 10), y);
-				Position pos2 = new Position(this.valPosModulo(x+2, 10), y);
-				Position pos3 = new Position(this.valPosModulo(x-1, 10), y);
-				Position pos4 = new Position(this.valPosModulo(x-2, 10), y);
+				Position pos1 = new Position(this.valPosModulo(x+1, grilleSize), y);
+				Position pos2 = new Position(this.valPosModulo(x+2, grilleSize), y);
+				Position pos3 = new Position(this.valPosModulo(x-1, grilleSize), y);
+				Position pos4 = new Position(this.valPosModulo(x-2, grilleSize), y);
 				posChampDeTir.add(pos1);
 				posChampDeTir.add(pos2);
 				posChampDeTir.add(pos3);
@@ -34,10 +34,10 @@ public class PionChampLateral extends Pion {
 				Position pos = this.pos.get(i);
 				int x = pos.getPosX();
 				int y = pos.getPosY();
-				Position pos1 = new Position(x, this.valPosModulo(y+1, 10));
-				Position pos2 = new Position(x, this.valPosModulo(y+2, 10));
-				Position pos3 = new Position(x, this.valPosModulo(y-1, 10));
-				Position pos4 = new Position(x, this.valPosModulo(y-2, 10));
+				Position pos1 = new Position(x, this.valPosModulo(y+1, grilleSize));
+				Position pos2 = new Position(x, this.valPosModulo(y+2, grilleSize));
+				Position pos3 = new Position(x, this.valPosModulo(y-1, grilleSize));
+				Position pos4 = new Position(x, this.valPosModulo(y-2, grilleSize));
 				posChampDeTir.add(pos1);
 				posChampDeTir.add(pos2);
 				posChampDeTir.add(pos3);

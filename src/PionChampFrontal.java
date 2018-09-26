@@ -5,7 +5,7 @@ public class PionChampFrontal extends Pion {
 	}
 
 	@Override
-	protected void setPosChampDeTir() {
+	protected void setPosChampDeTir(int grilleSize) {
 		Position pos = new Position(0,0);
 		int val = 0;
 		Position t1 = this.pos.get(0);
@@ -18,10 +18,10 @@ public class PionChampFrontal extends Pion {
 		// S'ils sont sur la même ligne
 		if (x1 - x2  == 0) {
 			// Alors c'est vers la droite	
-			if (this.valPosModulo(y1 - y2, 10) == 1) {
+			if (this.valPosModulo(y1 - y2, grilleSize) == 1) {
 				// On ajoute au champ de tir les (champ) cases de devant vers la droite
 				for (int i = 1; i < this.champDeTir + 1; i++) {
-					val = this.valPosModulo(y1+i, 10);
+					val = this.valPosModulo(y1+i, grilleSize);
 					pos = new Position(x1, val);
 					posChampDeTir.add(pos);
 				}
@@ -30,7 +30,7 @@ public class PionChampFrontal extends Pion {
 			else {
 				// On ajoute au champ de tir les (champ) cases de devant vers la gauche
 				for (int i = 1; i < this.champDeTir + 1; i++) {
-					val = this.valPosModulo(y1-i, 10);
+					val = this.valPosModulo(y1-i, grilleSize);
 					pos = new Position(x1, val);
 					posChampDeTir.add(pos);
 				}
@@ -39,10 +39,10 @@ public class PionChampFrontal extends Pion {
 		// S'ils sont sur la même colonne
 		else {
 			// Alors c'est vers le bas
-			if (this.valPosModulo(x1 - x2, 10) == 1) {
+			if (this.valPosModulo(x1 - x2, grilleSize) == 1) {
 				// On ajoute au champ de tir les (champ) cases de devant vers le bas
 				for (int i = 1; i < this.champDeTir + 1; i++) {
-					val = this.valPosModulo(x1+i, 10);
+					val = this.valPosModulo(x1+i, grilleSize);
 					pos = new Position(val, y1);
 					posChampDeTir.add(pos);
 				}
@@ -51,7 +51,7 @@ public class PionChampFrontal extends Pion {
 			else {
 				// On ajoute au champ de tir les (champ) cases de devant vers le haut
 				for (int i = 1; i < this.champDeTir + 1; i++) {
-					val = this.valPosModulo(x1-i, 10);
+					val = this.valPosModulo(x1-i, grilleSize);
 					pos = new Position(val, y1);
 					posChampDeTir.add(pos);
 				}

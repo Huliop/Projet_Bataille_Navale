@@ -67,7 +67,7 @@ public abstract class Pion {
 			this.pos.add(p);
 		}
 
-		setPosChampDeTir();
+		setPosChampDeTir(grilleSize);
 	}
 
 	public void placerPionHorizontal(int x, int y, int grilleSize) {
@@ -87,10 +87,10 @@ public abstract class Pion {
 			this.pos.add(p);
 		}
 
-		setPosChampDeTir();
+		setPosChampDeTir(grilleSize);
 	}
 	
-	protected abstract void setPosChampDeTir();
+	protected abstract void setPosChampDeTir(int grilleSize);
 	
 	public boolean peutTirer(Position pos) {
 		return this.posChampDeTir.contains(pos);
