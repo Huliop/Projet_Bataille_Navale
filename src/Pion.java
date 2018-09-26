@@ -93,7 +93,14 @@ public abstract class Pion {
 	protected abstract void setPosChampDeTir(int grilleSize);
 	
 	public boolean peutTirer(Position pos) {
-		return this.posChampDeTir.contains(pos);
+		for(Position p: posChampDeTir) {
+			if(
+				p.getPosX() == pos.getPosX() &&
+				p.getPosY() == pos.getPosY()
+			) return true;
+		}
+
+		return false;
 	}
 	
 	public int valPosModulo(int i, int mod) {
