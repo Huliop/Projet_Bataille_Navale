@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Grille {
 
-	private static final int size = 10;
+	private static final int size = 15;
 	private Case[][] terrain;
 	
 	public Grille() {
@@ -17,7 +17,6 @@ public class Grille {
 			}
 		}
 	}
-	
 
 	public static int getSize() {
 		return size;
@@ -29,6 +28,7 @@ public class Grille {
 	
 	public Boolean addBoat(Pion p) {
 		List<Position> positions = p.getPos();
+		List<Position> shootPositions = p.getPosChampDeTir();
 
 		// On vérifie qu'il n'y a pas déjà un bateau
 		for(Position pos: positions) {
@@ -37,18 +37,22 @@ public class Grille {
 			}
 		}
 
-		// Puis on ajoute le bateau
+		// On ajoute le bateau
 		for(Position position: positions) {
 			this.terrain[position.getPosX()][position.getPosY()].setBoat(
 				p.getNom().charAt(0)
 			);
 		}
 
+		// On ajoute le champ de tir du bateau
+		for(Position pos: shootPositions) {
+			this.terrain[pos.getPosX()][pos.getPosY()].setShootingRange();
+		}
+
 		return true;
 	}
 	
 	public String toString() {
-		// String ret = (this.size < 11) ? " " : "  ";
 		String ret = "  ";
 
 		for(int i = 0; i < size; i++) {
@@ -57,11 +61,12 @@ public class Grille {
 
 		ret += "\n";
 
-		for (int i = 0; i < size; i++) {
+		for(int i = 0; i < size; i++) {
 			ret += (i < 10) ? " "+i : i;
 
-			for (int j = 0; j < size; j++) {
-				ret += " "+terrain[i][j].getLetter();
+			for(int j = 0; j < size; j++) {
+				String padding = (terrain[i][j].isShootingRange()) ? ">" : " ";
+				ret += padding+terrain[i][j].getLetter();
 			}
 
 			ret += (i != size - 1) ? "\n" : "";

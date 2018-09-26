@@ -3,11 +3,13 @@ public class Case {
 
   private Boolean isWater;
   private Boolean isBoat;
+  private Boolean isShootingRange;
   private char letter;
 	
 	private Case(Builder b) {
     this.isWater = b.isWater;
     this.isBoat = b.isBoat;
+    this.isShootingRange = false;
     this.letter = b.letter;
   }
 	
@@ -49,6 +51,10 @@ public class Case {
     return isBoat;
   }
 
+  public Boolean isShootingRange() {
+    return isShootingRange;
+  }
+
   public char getLetter() {
     return letter;
   }
@@ -63,6 +69,14 @@ public class Case {
     this.isWater = false;
     this.isBoat = true;
     this.letter = letter;
+  }
+
+  public void setShootingRange() {
+    this.isShootingRange = true;
+  }
+
+  public void unsetShootingRange() {
+    this.isShootingRange = false;
   }
 
 }
