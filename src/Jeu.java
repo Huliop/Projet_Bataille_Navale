@@ -14,9 +14,12 @@ public class Jeu {
 		p2.placerPions();
 		System.out.println("");
 		
-		// TODO boucler sur la condition de victoire
-		// p1.turn(p2);
-		// p2.turn(p1);
+		// Le jeu commence
+		System.out.println("Que la partie commence !");
+		while(
+			!p1.turn(p2) &&
+			!p2.turn(p1)
+		) { } // TODO: récupérer les valeurs de retour bon savoir qui a gagné
 	}
 
 }

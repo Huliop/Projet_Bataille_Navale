@@ -7,7 +7,6 @@ public class Player {
 	// TODO ajouter la dimension stratégique de pouvoir voir où on a tiré et ce qui a marché?
 	private String name;
 	private boolean estTouche;
-	private String adversTouche;
 	private Grille grille;
 	private PionChampFrontal croiseur;
 	private PionChampLateral pav;
@@ -20,7 +19,6 @@ public class Player {
 		name = b.name;
 
 		this.estTouche = false;
-		this.adversTouche = ""; // TODO faire en sorte que quand on touche quelqu'un son nom soit dans cette variable
 		this.grille = new Grille();
 		this.croiseur = new PionChampFrontal("Croiseur");
 		this.pav = new PionChampLateral("Porte-avion");
@@ -55,19 +53,37 @@ public class Player {
 		this.listPion.add(this.ctrtorp);
 	}
 
-	public void turn(Player adversaire) {
+	/**
+	 * @return true si le joueur a gagné, false sinon
+	 */
+	public Boolean turn(Player adversaire) {
 		if (!this.estTouche) {
 			this.estTouche = false;
 			// TODO Le joueur peut déplacer un pion jusqu'à deux positions en veillant à mettre à jour ses paramètres
 		}
 
-		System.out.println(this.getNom()+", où voulez-vous tirer ?");
-		Position shootPosition = UserInput.PositionInput();
-		// if (tire(pos, adversaire.listPion)) {
-			// adversaire.estTouche = true;
-			// System.out.println("Vous avez touché : " + adversTouche);
-			// TODO Si le joueur a gagné, arrêter le jeu	
-		// }	
+		System.out.println(grille);
+
+		Position shootPosition = new Position(0, 0);
+		Boolean shootError = true;
+		while(shootError) {
+			System.out.println(this.getNom()+", où voulez-vous tirer ?");
+			shootPosition = UserInput.PositionInput();
+
+			if(canShoot(shootPosition)) shootError = false;
+			else System.out.println("Impossible de tirer ici, veuillez saisir une position correcte.");
+		}
+		
+		if (tire(shootPosition, adversaire.listPion)) {
+			adversaire.estTouche = true;
+
+			// TODO Si le joueur a gagné, arrêter le jeu
+		}
+		else {
+			System.out.println("Raté ...");
+		}
+
+		return false; // TODO: retourner true si le joueur a gagné
 	}
 
 	public void placerPions() {
@@ -111,24 +127,39 @@ public class Player {
 		System.out.println(this.grille);
 	}
 	
-	public boolean touche(List<Pion> list, Position pos) {
-		for (Pion p : list) {
-			if (p.getPos().contains(pos)) {
-				return true;
+	public boolean touche(List<Pion> adversaireList, Position pos) {
+		for (Pion pion : adversaireList) {
+			for(Position p: pion.getPos()) {
+				if(
+					p.getPosX() == pos.getPosX() &&
+					p.getPosY() == pos.getPosY()
+				) {
+					if(pion.looseLife()) System.out.println("Touché, coulé !"); // TODO: enlever le bateau si coulé
+					else System.out.println("Touché !");
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
-	public boolean tire(Position pos, List<Pion> list) {
+	public boolean tire(Position pos, List<Pion> adversaireList) {
 		for (Pion p : this.listPion) {
 			if (p.peutTirer(pos)) {
-				if (touche(list, pos)) {
+				if (touche(adversaireList, pos)) {
 					return true;
 				}
 				return false;
 			}
 		}
+		return false;
+	}
+
+	private Boolean canShoot(Position p) {
+		for(Pion pion: listPion) {
+			if(pion.peutTirer(p)) return true;
+		}
+
 		return false;
 	}
 	

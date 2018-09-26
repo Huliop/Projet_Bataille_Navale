@@ -118,6 +118,15 @@ public abstract class Pion {
 	public int setLife() {
 		return this.life;
 	}
+
+	/**
+	 * @return true si le bateau est détruit, false sinon
+	 */
+	public Boolean looseLife() {
+		this.life--;
+		if(this.life == 0) return true;
+		return false;
+	}
 	
 	public int getChampDeTir() {
 		return this.champDeTir;
