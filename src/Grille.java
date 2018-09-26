@@ -48,7 +48,8 @@ public class Grille {
 	}
 	
 	public String toString() {
-		String ret = (this.size < 11) ? " " : "  ";
+		// String ret = (this.size < 11) ? " " : "  ";
+		String ret = "  ";
 
 		for(int i = 0; i < size; i++) {
 			ret += (i < 10) ? " "+i : i;
