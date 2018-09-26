@@ -57,7 +57,7 @@ public class Grille {
 		ret += "\n";
 
 		for (int i = 0; i < size; i++) {
-			ret += i;
+			ret += (i < 10) ? " "+i : i;
 
 			for (int j = 0; j < size; j++) {
 				ret += " "+terrain[i][j].getLetter();
