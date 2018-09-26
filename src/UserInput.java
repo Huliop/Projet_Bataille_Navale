@@ -22,6 +22,15 @@ public final class UserInput {
     return input;
   }
 
+  static public Position PositionInput() {
+    System.out.print("Ligne : ");
+    int ligne = IntegerInput();
+    System.out.print("Colonne : ");
+    int colonne = IntegerInput();
+
+    return new Position(ligne, colonne);
+  }
+
   static public String VerifiedInput(ArrayList<String> values) {
     Boolean inputError = true;
     String input = "";

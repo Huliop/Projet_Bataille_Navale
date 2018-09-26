@@ -60,7 +60,9 @@ public class Player {
 			this.estTouche = false;
 			// TODO Le joueur peut déplacer un pion jusqu'à deux positions en veillant à mettre à jour ses paramètres
 		}
-		// TODO Demander au joueur sur quelle position il veut attaquer
+
+		System.out.println(this.getNom()+", où voulez-vous tirer ?");
+		Position shootPosition = UserInput.PositionInput();
 		// if (tire(pos, adversaire.listPion)) {
 			// adversaire.estTouche = true;
 			// System.out.println("Vous avez touché : " + adversTouche);
@@ -77,14 +79,13 @@ public class Player {
 
 			System.out.println(this.grille);
 			
-			while(bateauError) { 
-				System.out.print("Entrez la ligne du "+p.getNom()+" : ");
-				Integer x = UserInput.IntegerInput();
+			while(bateauError) {
+				System.out.println(this.getNom()+", où voulez-vous placer le "+p.getNom()+" ?");
+				Position boatPosition = UserInput.PositionInput();
+				Integer x = boatPosition.getPosX();
+				Integer y = boatPosition.getPosY();
 
-				System.out.print("Entrez la colonne du "+p.getNom()+" : ");
-				Integer y = UserInput.IntegerInput();
-
-				System.out.print("Entrez l'orientation du "+p.getNom()+" (h pour horizontal, v pour vertical) : ");
+				System.out.print("Orientation (h pour horizontal, v pour vertical) : ");
 				ArrayList<String> authorized = new ArrayList<String>();
 				authorized.add("h");
 				authorized.add("v");
