@@ -16,7 +16,7 @@ public class Player {
 	// ================================================================================================
 	private Player(Builder b) {
 		name = b.name;
-		this.hasBeenHit = false;
+		this.hasBeenHit = true; // Initialisé à true pour empêcher le déplacement de bateau au 1er tour
 		this.gameBoard = new Grille();
 		this.listPion = new ArrayList<Pion>();
 
@@ -93,43 +93,41 @@ public class Player {
 		return false;
 	}
 
+	private void moveBoat() {
+		System.out.println("Vous n'avez pas été touché, vous avez le droit de déplacer un bateau !");
+		System.out.print("Veuillez sélectionner un bateau parmi les suivants : ");
+
+		for(int i = 0; i < listPion.size(); i++) {
+			System.out.print(i+" "+listPion.get(i).getName()+((i < listPion.size() - 1) ? ", " : "."));
+		}
+
+		System.out.println("");
+
+		int boatNumber = 0;
+		Boolean boatError = true;
+		while(boatError) {
+			System.out.print("Bateau numéro : ");
+			boatNumber = UserInput.IntegerInput();
+
+			if(
+				boatNumber < 0 ||
+				boatNumber >= listPion.size()
+			) {
+				System.out.println("Numéro incorrect, veuillez recommencer.");
+			}
+			else boatError = false;
+		}
+
+		System.out.println("Bateau sélectionné : "+boatNumber);
+
+		// TODO: bouger le bateau
+	}
+
 	// ================================================================================================
 	// PUBLIC FUNCTIONS
 	// ================================================================================================
 	public String getName() {
 		return this.name;
-	}
-
-	/**
-	 * @return true si le joueur a gagné, false sinon
-	 */
-	public Boolean turn(Player adversaire) {
-		if(!this.hasBeenHit) {
-			// TODO Le joueur peut déplacer un pion jusqu'à deux positions en veillant à mettre à jour ses paramètres
-		}
-		this.hasBeenHit = false;
-
-		System.out.println(gameBoard);
-
-		Position shootPosition = new Position(0, 0);
-		Boolean shootError = true;
-		while(shootError) {
-			System.out.println(this.getName()+", où voulez-vous tirer ?");
-			shootPosition = UserInput.PositionInput();
-
-			if(canShoot(shootPosition)) shootError = false;
-			else System.out.println("Impossible de tirer ici, veuillez saisir une position correcte.");
-		}
-		
-		if(shoot(shootPosition, adversaire.listPion)) {
-			adversaire.hasBeenHit = true;
-			adversaire.updateGameBoard();
-		}
-		else {
-			System.out.println("Raté ...");
-		}
-
-		return(adversaire.listPion.size() == 0);
 	}
 
 	public void placePions() {
@@ -171,6 +169,39 @@ public class Player {
 
 		System.out.println("Super, voici la position de vos bateaux :");
 		System.out.println(this.gameBoard);
+	}
+
+	/**
+	 * @return true si le joueur a gagné, false sinon
+	 */
+	public Boolean turn(Player adversaire) {
+		if(!this.hasBeenHit) {
+			System.out.println(gameBoard);
+			moveBoat();
+		}
+		this.hasBeenHit = false;
+
+		System.out.println(gameBoard);
+
+		Position shootPosition = new Position(0, 0);
+		Boolean shootError = true;
+		while(shootError) {
+			System.out.println(this.getName()+", où voulez-vous tirer ?");
+			shootPosition = UserInput.PositionInput();
+
+			if(canShoot(shootPosition)) shootError = false;
+			else System.out.println("Impossible de tirer ici, veuillez saisir une position correcte.");
+		}
+		
+		if(shoot(shootPosition, adversaire.listPion)) {
+			adversaire.hasBeenHit = true;
+			adversaire.updateGameBoard();
+		}
+		else {
+			System.out.println("Raté ...");
+		}
+
+		return(adversaire.listPion.size() == 0);
 	}
 
 }
