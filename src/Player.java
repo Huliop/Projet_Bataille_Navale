@@ -82,7 +82,7 @@ public class Player {
 			System.out.println("Raté ...");
 		}
 
-		return false; // TODO: retourner true si le joueur a gagné
+		return(adversaire.listPion.size() == 0);
 	}
 
 	public void placerPions() {
