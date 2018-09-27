@@ -74,10 +74,9 @@ public class Player {
 			else System.out.println("Impossible de tirer ici, veuillez saisir une position correcte.");
 		}
 		
-		if (tire(shootPosition, adversaire.listPion)) {
+		if(tire(shootPosition, adversaire.listPion)) {
 			adversaire.estTouche = true;
-
-			// TODO Si le joueur a gagné, arrêter le jeu
+			adversaire.updateGrille();
 		}
 		else {
 			System.out.println("Raté ...");
@@ -134,7 +133,10 @@ public class Player {
 					p.getPosX() == pos.getPosX() &&
 					p.getPosY() == pos.getPosY()
 				) {
-					if(pion.looseLife()) System.out.println("Touché, coulé !"); // TODO: enlever le bateau si coulé
+					if(pion.looseLife()) {
+						adversaireList.remove(pion);
+						System.out.println("Touché, coulé !");
+					}
 					else System.out.println("Touché !");
 					return true;
 				}
@@ -162,5 +164,9 @@ public class Player {
 
 		return false;
 	}
-	
+
+	private void updateGrille() {
+		grille.update(listPion);
+	}
+
 }

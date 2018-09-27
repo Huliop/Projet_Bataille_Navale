@@ -74,5 +74,12 @@ public class Grille {
 
 		return ret;
 	}
+
+	public void update(List<Pion> boats) {
+		iniTerrain();
+		for(Pion boat: boats) {
+			addBoat(boat);
+		}
+	}
 	
 }
