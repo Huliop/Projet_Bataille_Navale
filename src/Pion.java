@@ -3,88 +3,93 @@ import java.util.List;
 
 public abstract class Pion {
 	
-	protected int life; // TODO quand un pion se fait toucher lui enlever une vie
+	// =================================================================================================
+	// ATTRIBUTES
+	// =================================================================================================
+	protected int life;
 	protected int size;
-	protected int champDeTir;
-	protected String nom;
-	protected List<Position> pos;
-	protected List<Position> posChampDeTir;
+	protected int shootingRange;
+	protected String name;
+	protected List<Position> positions;
+	protected List<Position> shootingRangePositions;
 	
-	public Pion(String nom) {
+	// ================================================================================================
+	// CONSTRUCTOR
+	// ================================================================================================
+	protected Pion(GenericBuilder<?> b) {
+		this.name = b.name;
+		this.size = b.size;
+		this.shootingRange = b.shootingRange;
 		this.life = 2;
-		
-		switch(nom) {
-			case "Contre torpilleur":
-				this.size = 3;
-				this.champDeTir = 2;
-				this.nom = "Contre torpilleur";
-				break;
-			case "Croiseur":
-				this.size = 4;
-				this.champDeTir = 2;
-				this.nom = "Croiseur";
-				break;
-				case "Porte-avion":
-				this.size = 5;
-				this.champDeTir = 2;
-				this.nom = "Porte-avion";	
-				break;
-			case "Sous-marin":
-				this.size = 3;
-				this.champDeTir = 4;
-				this.nom = "Sous-marin";
-				break;
-			case "Torpilleur":
-				this.size = 2;
-				this.champDeTir = 5;
-				this.nom = "Torpilleur";
-				break;
-			default:
-				this.size = 2;
-				this.champDeTir = 2;
-				this.nom = "Default";
-				break;
+		this.positions = new ArrayList<Position>();
+		this.shootingRangePositions = new ArrayList<Position>();
+	}
+
+	public abstract static class GenericBuilder<T extends GenericBuilder<T>> {
+
+		private String name;
+		private int size;
+		private int shootingRange;
+
+		public GenericBuilder() {}
+
+		public GenericBuilder<T> addName(String name) {
+			this.name = name;
+			return this;
 		}
-		
-		this.pos = new ArrayList<Position>();
-		this.posChampDeTir = new ArrayList<Position>();
+
+		public GenericBuilder<T> addSize(int size) {
+			this.size = size;
+			return this;
+		}
+
+		public GenericBuilder<T> addShootingRange(int shootingRange) {
+			this.shootingRange = shootingRange;
+			return this;
+		}
+
+		abstract public Pion build();
+
 	}
 	
+	// ================================================================================================
+	// FUNCTIONS
+	// ================================================================================================
 	public void placerPionVertical(int x, int y, int grilleSize) {
-		this.pos = new ArrayList<Position>();
+		this.positions = new ArrayList<Position>();
 
 		Position pInit = new Position(
 			this.valPosModulo(x, grilleSize),
 			this.valPosModulo(y, grilleSize)
 		);
-		this.pos.add(pInit);
+		this.positions.add(pInit);
 
 		for(int i = 1; i < this.size; i++) {
 			Position p = new Position(
 				this.valPosModulo(x + i, grilleSize),
 				this.valPosModulo(y, grilleSize)
 			);
-			this.pos.add(p);
+			this.positions.add(p);
 		}
 
 		setPosChampDeTir(grilleSize);
 	}
 
 	public void placerPionHorizontal(int x, int y, int grilleSize) {
-		this.pos = new ArrayList<Position>();
+		this.positions = new ArrayList<Position>();
 
 		Position pInit = new Position(
 			this.valPosModulo(x, grilleSize),
 			this.valPosModulo(y, grilleSize)
 		);
-		this.pos.add(pInit);
+		this.positions.add(pInit);
 
 		for(int i = 1; i < this.size; i++) {
 			Position p = new Position(
 				this.valPosModulo(x, grilleSize),
 				this.valPosModulo(y + i, grilleSize)
 			);
-			this.pos.add(p);
+			this.positions.add(p);
 		}
 
 		setPosChampDeTir(grilleSize);
@@ -92,11 +97,11 @@ public abstract class Pion {
 	
 	protected abstract void setPosChampDeTir(int grilleSize);
 	
-	public boolean peutTirer(Position pos) {
-		for(Position p: posChampDeTir) {
+	public boolean peutTirer(Position positions) {
+		for(Position p: shootingRangePositions) {
 			if(
-				p.getPosX() == pos.getPosX() &&
-				p.getPosY() == pos.getPosY()
+				p.getPosX() == positions.getPosX() &&
+				p.getPosY() == positions.getPosY()
 			) return true;
 		}
 
@@ -129,28 +134,29 @@ public abstract class Pion {
 	}
 	
 	public int getChampDeTir() {
-		return this.champDeTir;
+		return this.shootingRange;
 	}
 	
 	public String getNom() {
-		return this.nom;
+		return this.name;
 	}
 	
 	public List<Position> getPos() {
-		return this.pos;
+		return this.positions;
 	}
 	
 	public List<Position> getPosChampDeTir() {
-		return this.posChampDeTir;
+		return this.shootingRangePositions;
 	}
 
 	public String toString() {
 		String ret = "Positions de "+this.getNom()+" : ";
 
-		for(Position p: this.pos) {
+		for(Position p: this.positions) {
 			ret += "("+p.getPosX()+", "+p.getPosY()+") ";
 		}
 
 		return ret;
 	}
+
 }

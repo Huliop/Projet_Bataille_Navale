@@ -8,11 +8,11 @@ public class Player {
 	private String name;
 	private boolean estTouche;
 	private Grille grille;
-	private PionChampFrontal croiseur;
-	private PionChampLateral pav;
-	private PionChampFrontal torp;
-	private PionChampFrontal sub;
-	private PionChampLateral ctrtorp;
+	private Pion croiseur;
+	private Pion pav;
+	private Pion torp;
+	private Pion sub;
+	private Pion ctrtorp;
 	private List<Pion> listPion;
 	
 	private Player(Builder b) {
@@ -20,11 +20,11 @@ public class Player {
 
 		this.estTouche = false;
 		this.grille = new Grille();
-		this.croiseur = new PionChampFrontal("Croiseur");
-		this.pav = new PionChampLateral("Porte-avion");
-		this.torp = new PionChampFrontal("Torpilleur");
-		this.sub = new PionChampFrontal("Sous-marin");
-		this.ctrtorp = new PionChampLateral("Contre torpilleur");
+		this.croiseur = PionFactory.createCroiseur();
+		this.pav = PionFactory.createPorteAvion();
+		this.torp = PionFactory.createTorpilleur();
+		this.sub = PionFactory.createSousMarin();
+		this.ctrtorp = PionFactory.createContreTorpilleur();
 		iniListPion();
 	}
 
