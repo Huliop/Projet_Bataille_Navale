@@ -93,7 +93,62 @@ public class Player {
 		return false;
 	}
 
-	private void moveBoat() {
+	/**
+	 * @return true si on a pu déplacer le bateau, faux sinon
+	 */
+	private boolean moveBoat(Pion p, char c) {
+		// On enlève le pion et màj le plateau
+		listPion.remove(p);
+		updateGameBoard();
+
+		// On màj les positions en fonction du mouvement choisi
+		switch(c) {
+			case 'h':
+				p.moveUp(Grille.getSize());
+				break;
+			case 'b':
+				p.moveDown(Grille.getSize());
+				break;
+			case 'g':
+				p.moveLeft(Grille.getSize());
+				break;
+			case 'd':
+				p.moveRight(Grille.getSize());
+				break;
+			default:
+				break;
+		}
+
+		// On ré-ajoute le bateau sur le plateau
+		if(!this.gameBoard.addBoat(p)) {
+			// Si on ne peut pas, on remet les positions initiales du bateau
+			switch(c) {
+				case 'h':
+					p.moveDown(Grille.getSize());
+					break;
+				case 'b':
+					p.moveUp(Grille.getSize());
+					break;
+				case 'g':
+					p.moveRight(Grille.getSize());
+					break;
+				case 'd':
+					p.moveLeft(Grille.getSize());
+					break;
+				default:
+					break;
+			}
+
+			// Et on le réajoute
+			this.gameBoard.addBoat(p);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private void moveBoatForm() {
 		System.out.println("Vous n'avez pas été touché, vous avez le droit de déplacer un bateau !");
 		System.out.print("Veuillez sélectionner un bateau parmi les suivants : ");
 
@@ -118,9 +173,25 @@ public class Player {
 			else boatError = false;
 		}
 
-		System.out.println("Bateau sélectionné : "+boatNumber);
+		Pion movingBoat = listPion.get(boatNumber);
+		for(int i = 0; i < 2; i++) {
+			if(i == 1) System.out.println(gameBoard);
 
-		// TODO: bouger le bateau
+			Boolean movementError = true;
+			while(movementError) {
+				System.out.print("Sens du déplacement (h pour haut, b pour bas, g pour gauche, d pour droite, n pour ne pas bouger) : ");
+				ArrayList<String> authorized = new ArrayList<String>();
+				authorized.add("h");
+				authorized.add("b");
+				authorized.add("g");
+				authorized.add("d");
+				authorized.add("n");
+				String movement = UserInput.VerifiedInput(authorized);
+
+				if(moveBoat(movingBoat, movement.charAt(0))) movementError = false;
+				else System.out.println("Impossible de déplacer le bateau dans ce sens, veuillez recommencer.");
+			}
+		}
 	}
 
 	// ================================================================================================
@@ -135,11 +206,11 @@ public class Player {
 		System.out.println(this.getName()+", veuillez placer vos bateaux.");
 
 		for(Pion p: listPion) {
-			Boolean bateauError = true;
+			Boolean boatError = true;
 
 			System.out.println(this.gameBoard);
 			
-			while(bateauError) {
+			while(boatError) {
 				System.out.println(this.getName()+", où voulez-vous placer le "+p.getName()+" ?");
 				Position boatPosition = UserInput.PositionInput();
 				Integer x = boatPosition.getLine();
@@ -159,7 +230,7 @@ public class Player {
 				}
 
 				if(this.gameBoard.addBoat(p)) {
-					bateauError = false;
+					boatError = false;
 				}
 				else {
 					System.out.println("Impossible de placer le bateau ici, veuillez recommencer.");
@@ -177,7 +248,7 @@ public class Player {
 	public Boolean turn(Player adversaire) {
 		if(!this.hasBeenHit) {
 			System.out.println(gameBoard);
-			moveBoat();
+			moveBoatForm();
 		}
 		this.hasBeenHit = false;
 

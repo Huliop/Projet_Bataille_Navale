@@ -100,6 +100,26 @@ public abstract class Pion {
 		return(this.life == 0);
 	}
 
+	public void moveUp(int gameBoardSize) {
+		for(Position p: positions) p.moveUp(gameBoardSize);
+		for(Position p: shootingRangePositions) p.moveUp(gameBoardSize);
+	}
+
+	public void moveDown(int gameBoardSize) {
+		for(Position p: positions) p.moveDown(gameBoardSize);
+		for(Position p: shootingRangePositions) p.moveDown(gameBoardSize);
+	}
+
+	public void moveLeft(int gameBoardSize) {
+		for(Position p: positions) p.moveLeft(gameBoardSize);
+		for(Position p: shootingRangePositions) p.moveLeft(gameBoardSize);
+	}
+
+	public void moveRight(int gameBoardSize) {
+		for(Position p: positions) p.moveRight(gameBoardSize);
+		for(Position p: shootingRangePositions) p.moveRight(gameBoardSize);
+	}
+
 	public boolean canShoot(Position positions) {
 		for(Position p: shootingRangePositions) {
 			if(
