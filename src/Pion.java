@@ -53,65 +53,17 @@ public abstract class Pion {
 	}
 	
 	// ================================================================================================
-	// FUNCTIONS
+	// PROTECTED FUNCTIONS
 	// ================================================================================================
-	public void placerPionVertical(int x, int y, int grilleSize) {
-		this.positions = new ArrayList<Position>();
+	protected abstract void setShootingRangePositions(int grilleSize);
 
-		Position pInit = new Position(
-			this.valPosModulo(x, grilleSize),
-			this.valPosModulo(y, grilleSize)
-		);
-		this.positions.add(pInit);
-
-		for(int i = 1; i < this.size; i++) {
-			Position p = new Position(
-				this.valPosModulo(x + i, grilleSize),
-				this.valPosModulo(y, grilleSize)
-			);
-			this.positions.add(p);
-		}
-
-		setPosChampDeTir(grilleSize);
-	}
-
-	public void placerPionHorizontal(int x, int y, int grilleSize) {
-		this.positions = new ArrayList<Position>();
-
-		Position pInit = new Position(
-			this.valPosModulo(x, grilleSize),
-			this.valPosModulo(y, grilleSize)
-		);
-		this.positions.add(pInit);
-
-		for(int i = 1; i < this.size; i++) {
-			Position p = new Position(
-				this.valPosModulo(x, grilleSize),
-				this.valPosModulo(y + i, grilleSize)
-			);
-			this.positions.add(p);
-		}
-
-		setPosChampDeTir(grilleSize);
-	}
-	
-	protected abstract void setPosChampDeTir(int grilleSize);
-	
-	public boolean peutTirer(Position positions) {
-		for(Position p: shootingRangePositions) {
-			if(
-				p.getPosX() == positions.getPosX() &&
-				p.getPosY() == positions.getPosY()
-			) return true;
-		}
-
-		return false;
-	}
-	
-	public int valPosModulo(int i, int mod) {
+	// ================================================================================================
+	// PUBLIC FUNCTIONS
+	// ================================================================================================
+	public int moduloPosition(int i, int mod) {
 		return (i%mod + mod)%mod;
 	}
-	
+
 	public int getSize() {
 		return this.size;
 	}
@@ -119,7 +71,23 @@ public abstract class Pion {
 	public int getLife() {
 		return this.life;
 	}
+
+	public int getShootingRange() {
+		return this.shootingRange;
+	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
+	public List<Position> getPositions() {
+		return this.positions;
+	}
+	
+	public List<Position> getShootingRangePositions() {
+		return this.shootingRangePositions;
+	}
+
 	public int setLife() {
 		return this.life;
 	}
@@ -129,31 +97,65 @@ public abstract class Pion {
 	 */
 	public Boolean looseLife() {
 		this.life--;
-		if(this.life == 0) return true;
+		return(this.life == 0);
+	}
+
+	public boolean canShoot(Position positions) {
+		for(Position p: shootingRangePositions) {
+			if(
+				p.getLine() == positions.getLine() &&
+				p.getRow() == positions.getRow()
+			) return true;
+		}
+
 		return false;
 	}
 	
-	public int getChampDeTir() {
-		return this.shootingRange;
+	public void placeVerticalPion(int x, int y, int grilleSize) {
+		this.positions = new ArrayList<Position>();
+
+		Position headPosition = new Position(
+			this.moduloPosition(x, grilleSize),
+			this.moduloPosition(y, grilleSize)
+		);
+		this.positions.add(headPosition);
+
+		for(int i = 1; i < getSize(); i++) {
+			Position p = new Position(
+				this.moduloPosition(x + i, grilleSize),
+				this.moduloPosition(y, grilleSize)
+			);
+			this.positions.add(p);
+		}
+
+		setShootingRangePositions(grilleSize);
 	}
-	
-	public String getNom() {
-		return this.name;
-	}
-	
-	public List<Position> getPos() {
-		return this.positions;
-	}
-	
-	public List<Position> getPosChampDeTir() {
-		return this.shootingRangePositions;
+
+	public void placeHorizontalPion(int x, int y, int grilleSize) {
+		this.positions = new ArrayList<Position>();
+
+		Position headPosition = new Position(
+			this.moduloPosition(x, grilleSize),
+			this.moduloPosition(y, grilleSize)
+		);
+		this.positions.add(headPosition);
+
+		for(int i = 1; i < getSize(); i++) {
+			Position p = new Position(
+				this.moduloPosition(x, grilleSize),
+				this.moduloPosition(y + i, grilleSize)
+			);
+			this.positions.add(p);
+		}
+
+		setShootingRangePositions(grilleSize);
 	}
 
 	public String toString() {
-		String ret = "Positions de "+this.getNom()+" : ";
+		String ret = "Positions de "+this.getName()+" : ";
 
 		for(Position p: this.positions) {
-			ret += "("+p.getPosX()+", "+p.getPosY()+") ";
+			ret += "("+p.getLine()+", "+p.getRow()+") ";
 		}
 
 		return ret;

@@ -1,21 +1,33 @@
+
 public class Position {
-	private int posX;
-	private int posY;
+
+	// ================================================================================================
+	// ATTRIBUTES
+	// ================================================================================================
+	private int line;
+	private int row;
 	
+	// ================================================================================================
+	// CONSTRUCTOR
+	// ================================================================================================
 	public Position(int x, int y) {
-		this.posX = x;
-		this.posY = y;
+		this.line = x;
+		this.row = y;
+	}
+
+	// ================================================================================================
+	// PUBLIC FUNCTIONS
+	// ================================================================================================
+	public int getLine() {
+		return this.line;
 	}
 	
-	public int getPosX() {
-		return this.posX;
-	}
-	
-	public int getPosY() {
-		return this.posY;
+	public int getRow() {
+		return this.row;
 	}
 
 	public String toString() {
-		return "("+this.posX+", "+this.posY+")";
+		return "("+this.line+", "+this.row+")";
 	}
+
 }

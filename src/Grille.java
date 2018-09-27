@@ -36,26 +36,26 @@ public class Grille {
 	}
 	
 	public Boolean addBoat(Pion p) {
-		List<Position> boatPositions = p.getPos();
-		List<Position> shootPositions = p.getPosChampDeTir();
+		List<Position> boatPositions = p.getPositions();
+		List<Position> shootPositions = p.getShootingRangePositions();
 
 		// On vérifie qu'il n'y a pas déjà un bateau
 		for(Position pos: boatPositions) {
-			if(this.battlefied[pos.getPosX()][pos.getPosY()].isBoat()) {
+			if(this.battlefied[pos.getLine()][pos.getRow()].isBoat()) {
 				return false;
 			}
 		}
 
 		// On ajoute le bateau
 		for(Position pos: boatPositions) {
-			this.battlefied[pos.getPosX()][pos.getPosY()].setBoat(
-				p.getNom().charAt(0)
+			this.battlefied[pos.getLine()][pos.getRow()].setBoat(
+				p.getName().charAt(0)
 			);
 		}
 
 		// On ajoute le champ de tir du bateau
 		for(Position pos: shootPositions) {
-			this.battlefied[pos.getPosX()][pos.getPosY()].setShootingRange();
+			this.battlefied[pos.getLine()][pos.getRow()].setShootingRange();
 		}
 
 		return true;
