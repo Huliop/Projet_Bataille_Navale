@@ -16,10 +16,10 @@ public class Jeu {
 		
 		// Le jeu commence
 		System.out.println("Que la partie commence !");
-		Boolean p1Win, p2Win;
+		Boolean p1Win;
 		while(
 			!(p1Win = p1.turn(p2)) &&
-			!(p2Win = p2.turn(p1))
+			!p2.turn(p1)
 		) { }
 
 		String winner;

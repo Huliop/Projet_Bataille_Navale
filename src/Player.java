@@ -154,10 +154,10 @@ public class Player {
 				String orientation = UserInput.VerifiedInput(authorized);
 				
 				if(orientation.contains("h")) {
-					p.placeHorizontalPion(x, y, this.gameBoard.getSize());
+					p.placeHorizontalPion(x, y, Grille.getSize());
 				}
 				else {
-					p.placeVerticalPion(x, y, this.gameBoard.getSize());
+					p.placeVerticalPion(x, y, Grille.getSize());
 				}
 
 				if(this.gameBoard.addBoat(p)) {
