@@ -10,8 +10,8 @@ public class Jeu {
 
 		// Les joueurs placent les bateaux
 		System.out.println("Plaçons les bateaux !");
-		p1.placerPions();
-		p2.placerPions();
+		p1.placePions();
+		p2.placePions();
 		System.out.println("");
 		
 		// Le jeu commence
@@ -25,12 +25,12 @@ public class Jeu {
 		String winner;
 		String loser;
 		if(p1Win) {
-			winner = p1.getNom();
-			loser = p2.getNom();
+			winner = p1.getName();
+			loser = p2.getName();
 		}
 		else {
-			winner = p2.getNom();
-			loser = p1.getNom();
+			winner = p2.getName();
+			loser = p1.getName();
 		}
 
 		System.out.println("Bravo "+winner+", vous avez gagné contre "+loser+" !");
