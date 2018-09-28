@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class PionChampFrontal extends Pion {
 
@@ -22,6 +23,8 @@ public class PionChampFrontal extends Pion {
 	// ================================================================================================
 	@Override
 	protected void setShootingRangePositions(int grilleSize) {
+		this.shootingRangePositions = new ArrayList<Position>();
+
 		Position position = new Position(0,0);
 		int val, val2 = 0;
 		Position t1 = this.positions.get(0);
