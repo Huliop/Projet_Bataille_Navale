@@ -100,20 +100,22 @@ public class Player {
 		// On enlève le pion et màj le plateau
 		listPion.remove(p);
 		updateGameBoard();
+		
+		int n = Grille.getSize();
 
 		// On màj les positions en fonction du mouvement choisi
 		switch(c) {
 			case 'h':
-				p.moveUp(Grille.getSize());
+				p.moveUp(n);
 				break;
 			case 'b':
-				p.moveDown(Grille.getSize());
+				p.moveDown(n);
 				break;
 			case 'g':
-				p.moveLeft(Grille.getSize());
+				p.moveLeft(n);
 				break;
 			case 'd':
-				p.moveRight(Grille.getSize());
+				p.moveRight(n);
 				break;
 			default:
 				break;
@@ -124,16 +126,16 @@ public class Player {
 			// Si on ne peut pas, on remet les positions initiales du bateau
 			switch(c) {
 				case 'h':
-					p.moveDown(Grille.getSize());
+					p.moveDown(n);
 					break;
 				case 'b':
-					p.moveUp(Grille.getSize());
+					p.moveUp(n);
 					break;
 				case 'g':
-					p.moveRight(Grille.getSize());
+					p.moveRight(n);
 					break;
 				case 'd':
-					p.moveLeft(Grille.getSize());
+					p.moveLeft(n);
 					break;
 				default:
 					break;
@@ -194,23 +196,30 @@ public class Player {
 		}
 	}
 
+
 	// ================================================================================================
 	// PUBLIC FUNCTIONS
 	// ================================================================================================
 	public String getName() {
 		return this.name;
 	}
+	
+	public static void displayTour(Player p) {
+		System.out.println("############################    " + p.getName() + "    ############################");
+	}
 
 	public void placePions() {
+		Jeu.clearConsole();
+		System.out.println("Plaçons les bateaux !");
+		displayTour(this);
 		System.out.println("");
 		System.out.println(this.getName()+", veuillez placer vos bateaux.");
 
 		for(Pion p: listPion) {
 			Boolean boatError = true;
-
-			System.out.println(this.gameBoard);
 			
 			while(boatError) {
+				System.out.println(this.gameBoard + "\n");
 				System.out.println(this.getName()+", où voulez-vous placer le "+p.getName()+" ?");
 				Position boatPosition = UserInput.PositionInput();
 				Integer x = boatPosition.getLine();
@@ -236,16 +245,16 @@ public class Player {
 					System.out.println("Impossible de placer le bateau ici, veuillez recommencer.");
 				}
 			}
+			Jeu.clearConsole();
 		}
-
-		System.out.println("Super, voici la position de vos bateaux :");
-		System.out.println(this.gameBoard);
 	}
-
+	
 	/**
 	 * @return true si le joueur a gagné, false sinon
 	 */
 	public Boolean turn(Player adversaire) {
+		Jeu.clearConsole();
+		displayTour(this);
 		if(!this.hasBeenHit) {
 			System.out.println(gameBoard);
 			moveBoatForm();
@@ -271,7 +280,7 @@ public class Player {
 		else {
 			System.out.println("Raté ...");
 		}
-
+		UserInput.endTurn();
 		return(adversaire.listPion.size() == 0);
 	}
 

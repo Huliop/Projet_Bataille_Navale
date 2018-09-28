@@ -1,4 +1,3 @@
-
 public final class PionFactory {
 
   private PionFactory() {}
@@ -13,7 +12,7 @@ public final class PionFactory {
   }
 
   static public Pion createCroiseur() {
-    return new PionChampLateral
+    return new PionChampFrontal
     .Builder()
     .addName("Croiseur")
     .addSize(4)
@@ -31,7 +30,7 @@ public final class PionFactory {
   }
 
   static public Pion createSousMarin() {
-    return new PionChampLateral
+    return new PionChampFrontal
     .Builder()
     .addName("Sous-marin")
     .addSize(3)
@@ -40,7 +39,7 @@ public final class PionFactory {
   }
 
   static public Pion createTorpilleur() {
-    return new PionChampLateral
+    return new PionChampFrontal
     .Builder()
     .addName("Torpilleur")
     .addSize(2)
@@ -49,7 +48,7 @@ public final class PionFactory {
   }
 
   static public Pion createDefault() {
-    return new PionChampLateral
+    return new PionChampFrontal
     .Builder()
     .addName("Default")
     .addSize(2)

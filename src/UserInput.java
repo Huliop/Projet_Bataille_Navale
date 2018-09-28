@@ -35,19 +35,29 @@ public final class UserInput {
     Boolean inputError = true;
     String input = "";
 
-    while(inputError == true) {
-      Scanner scanner = new Scanner(System.in);
-      input = scanner.nextLine();
+	while(inputError == true) {
+	  Scanner scanner = new Scanner(System.in);
+	  input = scanner.nextLine();
+	
+	  if(values.contains(input)) {
+	    inputError = false;
+	  }
+	  else {
+	    System.out.print("Erreur, veuillez saisir une valeur autorisée : ");
+	      }
+	    }
 
-      if(values.contains(input)) {
-        inputError = false;
-      }
-      else {
-        System.out.print("Erreur, veuillez saisir une valeur autorisée : ");
-      }
-    }
-
-    return input;
+	return input;
   }
+
+	public static void endTurn() {
+		System.out.print("Veuillez entrez une touche pour continuer");
+	    String input = "";
+	
+	    while (input == "") {
+	    	Scanner scanner = new Scanner(System.in);
+	    	input = scanner.nextLine();
+	    }
+	}
 
 }

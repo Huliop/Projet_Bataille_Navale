@@ -1,4 +1,3 @@
-
 public class Jeu {
 
 	public static void main(String[] args) {
@@ -6,13 +5,12 @@ public class Jeu {
 		System.out.println("Entrons le nom des joueurs !");
 		Player p1 = PlayerFactory.createPlayerAskName();
 		Player p2 = PlayerFactory.createPlayerAskName();
-		System.out.println("");
+		clearConsole();
 
 		// Les joueurs placent les bateaux
-		System.out.println("Plaçons les bateaux !");
 		p1.placePions();
 		p2.placePions();
-		System.out.println("");
+		clearConsole();
 		
 		// Le jeu commence
 		System.out.println("Que la partie commence !");
@@ -34,6 +32,11 @@ public class Jeu {
 		}
 
 		System.out.println("Bravo "+winner+", vous avez gagné contre "+loser+" !");
+	}
+	
+	public static void clearConsole() {
+		for(int i=0;i<30;i++)
+		    System.out.println();
 	}
 
 }
